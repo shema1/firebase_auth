@@ -56,7 +56,7 @@ export class InfoPage extends Component {
 
     getStarted = () => {
         return (
-            <TouchableOpacity style={styles.getStartedBtn}>
+            <TouchableOpacity style={styles.getStartedBtn} onPress={()=>this.props.navigation.navigate("GetStarted")}>
                 <Text style={styles.getStartedBtnText}>Get started</Text>
             </TouchableOpacity>
         )
