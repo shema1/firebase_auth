@@ -33,12 +33,13 @@ export class Auth extends Component {
     }
 
     trackLogin = async (userData) => {
-
+        console.log("trackLogin", userData)
         let user = await firestore().collection('Users').doc(userData.profile.sub).get()
-        if (user) {
+        // console.log("user", user)
+        if (user._data) {
             firestore().collection('Users').doc(userData.profile.sub)
                 .update({
-                    testArr: firestore.FieldValue.arrayUnion("76")
+                    log: firestore.FieldValue.arrayUnion(new Date())
                 })
         } else {
             firestore().collection('Users').doc(userData.profile.sub).set({
@@ -46,7 +47,7 @@ export class Auth extends Component {
                 family_name: userData.profile.family_name,
                 given_name: userData.profile.given_name,
                 createdAt: firestore.FieldValue.serverTimestamp(),
-                testArr: [1]
+                log: [new Date()]
             })
         }
 
@@ -58,12 +59,12 @@ export class Auth extends Component {
     onGoogleButtonPress = async () => {
         // Get the users ID token
         const { idToken } = await GoogleSignin.signIn();
-        AsyncStorage.setItem("idToken", JSON.stringify(idToken))
         // Create a Google credential with the token
         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
         // // Sign-in the user with the credential
         let userData = await auth().signInWithCredential(googleCredential);
 
+        AsyncStorage.setItem("idToken", JSON.stringify(userData.additionalUserInfo.profile.sub))
         this.trackLogin(userData.additionalUserInfo)
         this.props.navigation.navigate("InfoPage")
 
