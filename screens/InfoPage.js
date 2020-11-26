@@ -11,7 +11,8 @@ import {
 import { Header } from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin } from '@react-native-community/google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export class InfoPage extends Component {
 
     componentDidMount() {
@@ -63,18 +64,19 @@ export class InfoPage extends Component {
             </TouchableOpacity>
         )
     }
-
     logOut = () => {
+        GoogleSignin
+            .signOut()
+            .then(() => {
+                this.props.navigation.navigate("Auth")
+                AsyncStorage.removeItem("idToken")
+            })
+            .catch(err => console.log("err", err));
+    }
+
+    logOutBtn = () => {
         return (
-            <Text onPress={() => {
-                GoogleSignin
-                    .signOut()
-                    .then((res) => {
-                        console.log('User signed out!',res)
-                        this.props.navigation.navigate("Auth")
-                    })
-                    .catch(err => console.log("err", err));
-            }} style={{ fontWeight: "700" }}>Log Out</Text>
+            <Text onPress={() => this.logOut()} style={{ fontWeight: "700" }}>Log Out</Text>
         )
     }
 
@@ -82,7 +84,7 @@ export class InfoPage extends Component {
         return (
             <View>
                 <Header leftComponent={this.getStarted}
-                    rightComponent={this.logOut}
+                    rightComponent={this.logOutBtn}
                     containerStyle={{ backgroundColor: "#24242447" }}
                 />
                 <Text>Info Page2</Text>
