@@ -26,6 +26,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
+import Navigation from './navigation';
 const App: () => React$Node = () => {
 
   useEffect(() => {
@@ -48,8 +49,8 @@ const App: () => React$Node = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <TouchableOpacity onPress={() => onGoogleButtonPress()}>
+      {/* <SafeAreaView> */}
+        {/* <TouchableOpacity onPress={() => onGoogleButtonPress()}>
           <Text>LOGIN</Text>
         </TouchableOpacity>
         <GoogleSigninButton
@@ -58,9 +59,9 @@ const App: () => React$Node = () => {
           // color={GoogleSigninButton.Color.Dark}
           onPress={() => onGoogleButtonPress()}
         // disabled={this.state.isSigninInProgress} 
-        />
-
-      </SafeAreaView>
+        /> */}
+        <Navigation/>
+      {/* </SafeAreaView> */}
     </>
   );
 };
