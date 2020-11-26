@@ -14,9 +14,12 @@ export default function Navigation() {
 const Stack = createStackNavigator()
 function RootNavigator() {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="infoPage" component={InfoPage} />
+        <Stack.Navigator
+        screenOptions={{
+            headerShown:false
+        }}>
             <Stack.Screen name="Auth" component={Auth} />
+            <Stack.Screen name="InfoPage" component={InfoPage} />
 
         </Stack.Navigator>
     )

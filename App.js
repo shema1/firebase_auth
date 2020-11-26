@@ -30,23 +30,13 @@ import auth from '@react-native-firebase/auth';
 import Navigation from './navigation';
 const App: () => React$Node = () => {
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '301331475637-jaun4v92b12vtkhqhevtfbffr7prmn2t.apps.googleusercontent.com',
-    });
-  }, [])
+  // useEffect(() => {
+  //   GoogleSignin.configure({
+  //     webClientId: '301331475637-jaun4v92b12vtkhqhevtfbffr7prmn2t.apps.googleusercontent.com',
+  //   });
+  // }, [])
 
-  async function onGoogleButtonPress() {
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-    console.log("token", idToken)
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    // Sign-in the user with the credential
-    let a = await auth().signInWithCredential(googleCredential);
-    console.log("a", a)
-    return a
-  }
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
