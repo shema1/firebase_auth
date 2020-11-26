@@ -18,7 +18,6 @@ export class Auth extends Component {
         return a
     }
     render() {
-        console.log("sdasdasdas")
         return (
             <View style={styles.container}>
                 <GoogleSigninButton
