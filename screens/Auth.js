@@ -22,7 +22,6 @@ export class Auth extends Component {
 
     checkAuth = async () => {
         let res = await AsyncStorage.getItem("idToken")
-        console.log("res", res)
         if (res) {
             this.props.navigation.navigate("InfoPage")
         }
@@ -33,9 +32,7 @@ export class Auth extends Component {
     }
 
     trackLogin = async (userData) => {
-        console.log("trackLogin", userData)
         let user = await firestore().collection('Users').doc(userData.profile.sub).get()
-        // console.log("user", user)
         if (user._data) {
             firestore().collection('Users').doc(userData.profile.sub)
                 .update({

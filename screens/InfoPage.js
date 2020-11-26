@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Dimensions, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, Dimensions, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native'
 import {
     LineChart,
 } from "react-native-chart-kit"
@@ -7,7 +7,7 @@ import { Header } from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Entypo';
 import moment from "moment"
 export class InfoPage extends Component {
 
@@ -54,13 +54,7 @@ export class InfoPage extends Component {
         })
     }
 
-    getStarted = () => {
-        return (
-            <TouchableOpacity style={styles.getStartedBtn} onPress={()=>this.props.navigation.navigate("GetStarted")}>
-                <Text style={styles.getStartedBtnText}>Get started</Text>
-            </TouchableOpacity>
-        )
-    }
+
     logOut = () => {
         GoogleSignin
             .signOut()
@@ -71,7 +65,15 @@ export class InfoPage extends Component {
             .catch(err => console.log("err", err));
     }
 
-    logOutBtn = () => {
+    _renderGetStartedBtn = () => {
+        return (
+            <TouchableOpacity style={styles.getStartedBtn} onPress={() => this.props.navigation.navigate("GetStarted")}>
+                <Text style={styles.getStartedBtnText}>Get started</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    _renderLogOutBtn = () => {
         return (
             <>
                 <Text>{this.state.user.given_name}</Text>
@@ -84,11 +86,11 @@ export class InfoPage extends Component {
         const { user, chartData } = this.state
         return (
             <View>
-                <Header leftComponent={this.getStarted}
-                    rightComponent={this.logOutBtn}
+                <Header leftComponent={this._renderGetStartedBtn()}
+                    rightComponent={this._renderLogOutBtn()}
                     containerStyle={{ backgroundColor: "#24242447" }}
                 />
-                <View style={{alignItems:"center"}}>
+                <View style={{ alignItems: "center" }}>
                     <Text style={styles.title}>Logs info</Text>
                     <Text style={styles.subTitle}>See below the time and logs info</Text>
                 </View>
@@ -124,6 +126,13 @@ export class InfoPage extends Component {
                         style={styles.chartStyle}
                     />
                 </ScrollView>
+                <View style={styles.social}>
+                    <Icon name="facebook" size={20} color="#000" onPress={() => Linking.openURL("https://www.youtube.com/")} />
+                    <Icon name="youtube" size={20} color="#000" onPress={() => Linking.openURL("https://www.facebook.com/")} />
+                    <Icon name="instagram" size={20} color="#000" onPress={() => Linking.openURL("https://www.instagram.com/")} />
+                    <Icon name="twitter" size={20} color="#000" onPress={() => Linking.openURL("https://twitter.com/")} />
+                    <Icon name="linkedin" size={20} color="#000" onPress={() => Linking.openURL("https://www.linkedin.com/")} />
+                </View>
             </View>
         )
     }
@@ -145,13 +154,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 20
     },
-    title:{
-        fontWeight:"700",
-        fontSize:30,
-        marginTop:10
+    title: {
+        fontWeight: "700",
+        fontSize: 30,
+        marginTop: 10
     },
-    subTitle:{
-
+    social: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        paddingHorizontal: 50,
+        marginTop: 30
     }
 
 })
